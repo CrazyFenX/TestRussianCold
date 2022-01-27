@@ -10,6 +10,6 @@ namespace TestRussianCold
     {
         public void Add(ushort a, ushort b, ushort c);
         public void Subtract();
-        public void IsValid();
+        public bool IsValid();
     }
 }

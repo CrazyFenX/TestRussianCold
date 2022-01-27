@@ -36,7 +36,7 @@ namespace TestRussianCold
             throw new NotImplementedException();
         }
 
-        public void IsValid()
+        public bool IsValid()
         {
             throw new NotImplementedException();
         }

@@ -26,15 +26,6 @@ namespace TestRussianCold
             days = inputdays;
         }
 
-        private bool IsValid()
-        {
-            if (months > 12) return false;
-            if (days > 31) return false;
-            if ((months == 4 || months == 6 || months == 9 || months == 11) && days > 30) return false;
-            if ((years / 4 != 0) && months == 2 && days > 28) return false;
-            if ((years / 4 == 0) && months == 2 && days > 29) return false;
-            return true;
-        }
 
         public override string ToString()
         {
@@ -87,9 +78,63 @@ namespace TestRussianCold
             throw new NotImplementedException();
         }
 
-        void IFormat.IsValid()
+        public bool IsValid()
         {
-            throw new NotImplementedException();
+            if (months > 12) return false;
+            if (days > 31) return false;
+            if ((months == 4 || months == 6 || months == 9 || months == 11) && days > 30) return false;
+            if ((years / 4 != 0) && months == 2 && days > 28) return false;
+            if ((years / 4 == 0) && months == 2 && days > 29) return false;
+            return true;
+        }
+
+        public static bool operator >= (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years > date2.years) return true;
+            if (date1.years == date2.years)
+                if (date1.months > date2.months) return true;
+                if (date1.months == date2.months)
+                    if (date1.days >= date2.days) return true;
+            return false;
+        }
+        public static bool operator <= (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years < date2.years) return true;
+            if (date1.years == date2.years)
+                if (date1.months < date2.months) return true;
+            if (date1.months == date2.months)
+                if (date1.days <= date2.days) return true;
+            return false;
+        }
+
+        public static bool operator > (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years > date2.years) return true;
+            if (date1.years == date2.years)
+                if (date1.months > date2.months) return true;
+            if (date1.months == date2.months)
+                if (date1.days > date2.days) return true;
+            return false;
+        }
+        public static bool operator < (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years < date2.years) return true;
+            if (date1.years == date2.years)
+                if (date1.months < date2.months) return true;
+            if (date1.months == date2.months)
+                if (date1.days < date2.days) return true;
+            return false;
+        }
+
+        public static bool operator == (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years == date2.years && date1.months == date2.months && date1.days == date2.days) return true;
+            return false;
+        }
+        public static bool operator != (DateFormat date1, DateFormat date2)
+        {
+            if (date1.years == date2.years && date1.months == date2.months && date1.days == date2.days) return false;
+            return true;
         }
     }
 }
