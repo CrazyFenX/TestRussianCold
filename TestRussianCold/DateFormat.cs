@@ -12,8 +12,6 @@ namespace TestRussianCold
         private ushort months;
         private ushort days;
 
-        //public enum monthss { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
-
         public DateFormat(ushort inputyears, ushort inputmonths, ushort inputdays)
         {
             if (inputmonths > 12) throw new Exception("Некорректный номер месяца!");
@@ -22,14 +20,22 @@ namespace TestRussianCold
             if ((years / 4 != 0) && months == 2 && days > 28) throw new Exception("В невисокосный год в феврале 28 дней!");
             if ((years / 4 == 0) && months == 2 && days > 29) throw new Exception("В високосный год в феврале 29 дней!");
             years = inputyears;
-            months = inputdays;
+            months = inputmonths;
             days = inputdays;
         }
 
+        public static DateFormat FromString(string inputStr)
+        {
+            string[] stringArray = inputStr.Split('.');
+            if (stringArray.Length != 3) throw new Exception("Неверный формат даты! Проверьте правильность заполения полей и повторите попытку.");    
+            return new DateFormat((ushort)Convert.ToInt32(stringArray[2]), (ushort)Convert.ToInt32(stringArray[1]), (ushort)Convert.ToInt32(stringArray[0]));
+        }
 
         public override string ToString()
         {
-            return years.ToString() + "." + months.ToString() + "." + days.ToString();
+            string _days = days < 10 ? "0" + days.ToString() : days.ToString();
+            string _months = months < 10 ? "0" + months.ToString() : months.ToString();
+            return _days + "." + _months + "." + years.ToString();
         }
         private void AddYears(ushort addValue)
         {
@@ -55,15 +61,15 @@ namespace TestRussianCold
 
         private void SubtractYears()
         {
-
+            //pass
         }
         private void SubtractMonths()
         {
-
+            //pass
         }
         private void SubtractDays()
         {
-
+            //pass
         }
 
         public void Add(ushort years = 0, ushort months = 0, ushort days = 0)
@@ -135,6 +141,14 @@ namespace TestRussianCold
         {
             if (date1.years == date2.years && date1.months == date2.months && date1.days == date2.days) return false;
             return true;
+        }
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
